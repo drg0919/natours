@@ -4,7 +4,6 @@
   "description": "Learning server dev",
   "main": "app.js",
   "scripts": {
-    "concurrence": "concurrently \"npm:start\" \"npm:bundle:watch\"",
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production&nodemon server.js",
     "debug": "ndb server.js",
