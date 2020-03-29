@@ -9,7 +9,7 @@
     "start:prod": "SET NODE_ENV=production&nodemon server.js",
     "debug": "ndb server.js",
     "bundle:watch": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "build:js" : "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
   },
   "author": "Kush",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.21.2",
     "hpp": "^0.2.3",
+    "html-to-text": "^5.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
     "morgan": "^1.9.1",
