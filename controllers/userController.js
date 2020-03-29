@@ -59,14 +59,11 @@ exports.deleteMe = catchAsync(async (req,res) => {
 exports.updateMe = catchAsync(async (req,res,next) => {
     const {name,email} = req.body;
     let updated = {name,email};
-    // if( name === req.user.name && email === req.user.email)
-    //     next(new AppError('Data entered is the same', 400));
     if(!name && !email) {
         next(new AppError('Please enter data', 400));
     }
     if(req.file)
         updated = {...updated, photo: req.file.filename};
-    console.log(updated);
     const doc = await User.findByIdAndUpdate(req.user.id,updated,{
         new: true,
         runValidators: true

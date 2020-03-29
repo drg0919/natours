@@ -71,7 +71,6 @@ exports.getToursWithin = catchAsync(async (req,res,next) => {
             $centerSphere : [[long,lat],radius]
         }
     }});
-    console.log(distance,lat,long,unit);
     res.status(200).json({
         status: 'success',
         results: tours.length,
@@ -80,53 +79,3 @@ exports.getToursWithin = catchAsync(async (req,res,next) => {
         }
     });
 });
-
-// exports.getTourStats = catchAsync(async (req,res,next)=> {
-//         const stats = await Tour.aggregate([
-//             {
-//                 $match: {
-//                     ratingsAverage: {$gte: 4.5}
-//                 }
-//             },
-//             {
-//                 $group: {
-//                     _id: {$toUpper: '$difficulty'},
-//                     numTours: {
-//                         $sum: 1
-//                     },
-//                     numRatings: {
-//                         $sum: '$ratingsQuantity'
-//                     },
-//                     avgRating: {
-//                         $avg: '$ratingsAverage'
-//                     },
-//                     avgPrice : {
-//                         $avg: '$price'
-//                     },
-//                     minPrice : {
-//                         $min: '$price'
-//                     },
-//                     minRating: {
-//                         '$min': '$ratingsAverage'
-//                     }
-//                 }
-//             },
-//             {
-//                 $sort: {
-//                     avgPrice: 1
-//                 }
-//             }
-//             // },
-//             // {
-//             //     $match: {
-//             //         _id: {$ne: 'DIFFICULT'}
-//             //     }
-//             // }
-//         ]);
-//         res.status(200).json({
-//             status: 'success',
-//             data: {
-//                 stats
-//             }
-//         });
-//     })

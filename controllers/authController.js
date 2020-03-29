@@ -84,8 +84,6 @@ exports.protected = catchAsync(async (req,res,next) => {
     else {
         return next(new AppError('Please log in to continue',401));
     }
-    if(process.env.NODE_ENV==='development')    
-        console.log('\x1b[45m',token);
     const verification = await promisify(jwt.verify)(token,process.env.JWT_SECRET);     //Turns .verify callback to a promise
     //Check if user still exists
     const tempUser = await User.findById(verification.id);
@@ -106,8 +104,6 @@ exports.isLoggedIn = catchAsync(async (req,res,next) => {
     if(req.headers.cookie&&req.headers.cookie.startsWith('jwt=')) {
     //OR we can use req.cookies.jwt due to cookie parser, above statement doesn't require cookie parser
         token = req.headers.cookie.split('=')[1]||undefined;
-        if(process.env.NODE_ENV==='development')    
-            console.log('\x1b[46m',token);
         const verification = await promisify(jwt.verify)(token,process.env.JWT_SECRET);     //Turns .verify callback to a promise
         const tempUser = await User.findById(verification.id);
         if(!tempUser) {
@@ -176,7 +172,6 @@ exports.resetPassword = catchAsync(async (req,res,next) => {
 })
 
 exports.passwordChange = catchAsync(async(req,res,next) => {
-    console.log("IN PASSWORD CHANGE");
     const user = await User.findById(req.user.id).select('+password');
     if(!user) 
         return next(new AppError('Please log in',401));

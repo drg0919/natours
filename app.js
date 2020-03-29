@@ -15,14 +15,8 @@ const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-// const cookieParser = require('cookie-parser');
 
-// const corsOptions = {
-//     origin: ['http://localhost:3001'],
-//     credentials: true
-// }
-
-// app.use(cors(corsOptions));
+app.use(cors());
 
 app.set('view engine', 'pug');
 
@@ -53,13 +47,6 @@ const limiter = rateLimit({
 });
 
 app.use("/api",limiter);    //To limit requests from one IP
-
-app.use((req,res,next)=> {
-    req.requestedAt = new Date().toISOString();
-    console.log("Custom middleware");
-    console.log(req.requestedAt);
-    next();
-});
 
 //Route handler functions
 //Routes

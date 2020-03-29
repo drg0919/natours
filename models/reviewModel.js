@@ -9,12 +9,6 @@ const reviewSchema = new mongoose.Schema({
     rating : {
         type: Number,
         required: [true, 'Review must have a rating'],
-        // validate: {
-        //     validator: function(val) {
-        //         return val<=5;
-        //     },
-        //     message: 'Rating is out of 5'
-        // }
         min: 1,
         max: 5
     },

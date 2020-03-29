@@ -3,7 +3,7 @@ import {showAlert} from './alert';
 
 export const updateSettings = async (data) => {
     try {
-        const res = await axios.patch('http://localhost:3000/api/v1/users/updateMe',data);
+        const res = await axios.patch('/api/v1/users/updateMe',data);
         if(res.data.status === 'success')
             showAlert('success', "Your credentials have been updated");
         else
@@ -16,7 +16,7 @@ export const updateSettings = async (data) => {
 
 export const updatePassword = async (currentPassword, newPassword, confirmNewPassword) => {
     try {
-        const res = await axios.patch('http://localhost:3000/api/v1/users/changepassword', {
+        const res = await axios.patch('/api/v1/users/changepassword', {
             currentPassword,
             newPassword,
             confirmNewPassword
