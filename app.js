@@ -8,6 +8,7 @@ const expressSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const compression = require('compression'); 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -40,7 +41,7 @@ app.post('/web-checkout', express.raw({type: 'application/json'}), webCheckout);
 
 app.use(express.json({limit: '10kb'}));
 
-// app.use(cookieParser());    //Cookies can be accessed using req.cookies instead of req.headers.cookie, optional
+app.use(cookieParser());    //Cookies can be accessed using req.cookies instead of req.headers.cookie, optional
 
 app.use(expressSanitize());    //Prevent DB queries from input
 

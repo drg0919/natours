@@ -6,6 +6,8 @@ export const login = async (email,password) => {
     const res = await axios({
         method: 'POST',
         url: '/api/v1/users/login',
+        credentials: 'include',
+        withCredentials: true,
         data: {
           email,
           password

@@ -15,7 +15,7 @@ const sendToken = (id,code,req,res,data=undefined) => {
     const cookieOptions = {
         expires: new Date(Date.now()+process.env.COOKIE_EXPIRATION*60*60*1000),
         httpOnly: true,
-        secure: req.secure||req.headers['x-forwaded-proto'] === 'https'
+        secure: req.secure||req.headers['x-forwarded-proto'] === 'https'
     }
     res.cookie('jwt',token,cookieOptions);
     if(data) {
@@ -80,6 +80,8 @@ exports.protected = catchAsync(async (req,res,next) => {
         //OR we can use req.cookies.jwt due to cookie parser, above statement doesn't require cookie parser
         token = req.headers.cookie.split('=')[1]||undefined;
     }
+    else if(req.cookies)
+        token = req.cookies.jwt;
     else {
         return next(new AppError('Please log in to continue',401));
     }
@@ -100,9 +102,11 @@ exports.protected = catchAsync(async (req,res,next) => {
 exports.isLoggedIn = catchAsync(async (req,res,next) => {
     let token = undefined;
     try {
-    if(req.headers.cookie&&req.headers.cookie.startsWith('jwt=')) {
+    if(req.headers.cookie&&req.headers.cookie.startsWith('jwt=')||req.cookies.jwt) {
     //OR we can use req.cookies.jwt due to cookie parser, above statement doesn't require cookie parser
         token = req.headers.cookie.split('=')[1]||undefined;
+        if(req.cookies)
+            token = req.cookies.jwt;
         const verification = await promisify(jwt.verify)(token,process.env.JWT_SECRET);     //Turns .verify callback to a promise
         const tempUser = await User.findById(verification.id);
         if(!tempUser) {
