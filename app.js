@@ -14,12 +14,15 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const {webCheckout} = require('./controllers/bookingController');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 app.use(cors());
 
 app.use(compression());
+
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 
@@ -32,6 +35,8 @@ app.use(helmet());  //Helmet to secure over HTTP
 
 if(process.env.NODE_ENV==='development')
 app.use(morgan('dev'));    //Morgan for seeing requests in dev
+
+app.post('/web-checkout', express.raw({type: 'application/json'}), webCheckout);
 
 app.use(express.json({limit: '10kb'}));
 

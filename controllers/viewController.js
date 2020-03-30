@@ -43,5 +43,5 @@ exports.getMyTours = catchAsync(async (req,res,next) => {
     const tours = await Tour.find({_id: {$in: ids}});
     res.status(200).render('overview', {
         tours
-    })
+    });
 });

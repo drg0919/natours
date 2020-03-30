@@ -20,6 +20,13 @@ process.on('uncaughtException', (err,origin) => {
     });
 });
 
+process.on('SIGTERM', () => {
+    console.log("Shutting down due to SIGTERM");
+    server.close(() => {
+        console.log("Process terminated");
+    });
+})
+
 mongoose.connect(DB,{
     useNewUrlParser:true,
     useCreateIndex:true,
